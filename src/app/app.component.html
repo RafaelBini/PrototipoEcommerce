@@ -1,0 +1,48 @@
+<div>
+  <mat-toolbar class="header">
+    <table>
+      <tr>
+        <td width="15%">
+          <a routerLink="">
+            <img src="../assets/logo.png" style="height: 120px; display: block; margin-left: 0px;" />
+          </a>
+        </td>
+
+        <td>
+
+          <input matInput placeholder="Digite aqui o que você precisa" aria-label="Produto" [matAutocomplete]="auto"
+            [formControl]="produtoCtrl"
+            style="width: 60%; border-radius: 10px; text-align: left; border: 2.5px solid #F48221; padding: 7px;">
+          <mat-autocomplete class="search" #auto="matAutocomplete">
+            <mat-option *ngFor="let produto of filteredProdutos | async" (click)="verDetalhes(produto)">
+              <table>
+                <tr>
+                  <td>
+                    <img aria-hidden [src]="produto.imgUrl" style="height: 65px;" />
+                  </td>
+                  <td>
+                    {{produto.nome | slice:0:22}} | <b>{{produto.preco  | currency:'BRL':'symbol':'1.2-2' }}</b>
+                  </td>
+                </tr>
+              </table>
+
+
+            </mat-option>
+          </mat-autocomplete>
+
+        </td>
+        <td width="15%">
+          <button *ngIf="!loginService.isLogged" (click)="abirLogin()" mat-button>ENTRAR</button>
+          <button *ngIf="loginService.isLogged" (click)="sair()" mat-button>SAIR</button>
+        </td>
+      </tr>
+    </table>
+  </mat-toolbar>
+
+</div>
+
+<div style="min-height: 80%;">
+
+  <router-outlet></router-outlet>
+
+</div>
